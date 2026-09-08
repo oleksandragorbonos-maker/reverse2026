@@ -1,0 +1,858 @@
+   1              		.file	"dijkstra.c"
+   2              		.text
+   3              	.Ltext0:
+   4              		.file 0 "/home/kali" "dijkstra.c"
+   5              		.globl	initGraph
+   7              	initGraph:
+   8              	.LFB6:
+   9              		.file 1 "dijkstra.c"
+   1:dijkstra.c    **** #include <stdio.h>
+   2:dijkstra.c    **** #include <stdlib.h>
+   3:dijkstra.c    **** #include <limits.h>
+   4:dijkstra.c    **** #include <string.h>
+   5:dijkstra.c    **** 
+   6:dijkstra.c    **** #define MAX_VERTICES 100
+   7:dijkstra.c    **** #define INF INT_MAX
+   8:dijkstra.c    **** 
+   9:dijkstra.c    **** typedef struct {
+  10:dijkstra.c    ****     int weight[MAX_VERTICES][MAX_VERTICES];  // матриця ваг ребер
+  11:dijkstra.c    ****     int vertices;
+  12:dijkstra.c    **** } Graph;
+  13:dijkstra.c    **** 
+  14:dijkstra.c    **** // Ініціалізація графа
+  15:dijkstra.c    **** void initGraph(Graph *g, int v) {
+  10              		.loc 1 15 33
+  11 0000 14000000 		.cfi_startproc
+  11      00000000 
+  11      017A5200 
+  11      01781001 
+  11      1B0C0708 
+  12 0000 55       		pushq	%rbp
+  13 0029 410E10   		.cfi_def_cfa_offset 16
+  14 002c 8602     		.cfi_offset 6, -16
+  15 0001 4889E5   		movq	%rsp, %rbp
+  16 002e 430D06   		.cfi_def_cfa_register 6
+  17 0004 48897DE8 		movq	%rdi, -24(%rbp)
+  18 0008 8975E4   		movl	%esi, -28(%rbp)
+  16:dijkstra.c    ****     g->vertices = v;
+  19              		.loc 1 16 17
+  20 000b 488B45E8 		movq	-24(%rbp), %rax
+  21 000f 8B55E4   		movl	-28(%rbp), %edx
+  22 0012 8990409C 		movl	%edx, 40000(%rax)
+  22      0000
+  23              	.LBB2:
+  17:dijkstra.c    ****     for (int i = 0; i < v; i++) {
+  24              		.loc 1 17 14
+  25 0018 C745FC00 		movl	$0, -4(%rbp)
+  25      000000
+  26              		.loc 1 17 5
+  27 001f EB5F     		jmp	.L2
+  28              	.L7:
+  29              	.LBB3:
+  18:dijkstra.c    ****         for (int j = 0; j < v; j++) {
+  30              		.loc 1 18 18
+  31 0021 C745F800 		movl	$0, -8(%rbp)
+  31      000000
+  32              		.loc 1 18 9
+  33 0028 EB4A     		jmp	.L3
+  34              	.L6:
+  19:dijkstra.c    ****             if (i == j)
+  35              		.loc 1 19 16
+  36 002a 8B45FC   		movl	-4(%rbp), %eax
+  37 002d 3B45F8   		cmpl	-8(%rbp), %eax
+  38 0030 7520     		jne	.L4
+  20:dijkstra.c    ****                 g->weight[i][j] = 0;
+  39              		.loc 1 20 33
+  40 0032 488B45E8 		movq	-24(%rbp), %rax
+  41 0036 8B55F8   		movl	-8(%rbp), %edx
+  42 0039 4863D2   		movslq	%edx, %rdx
+  43 003c 8B4DFC   		movl	-4(%rbp), %ecx
+  44 003f 4863C9   		movslq	%ecx, %rcx
+  45 0042 486BC964 		imulq	$100, %rcx, %rcx
+  46 0046 4801CA   		addq	%rcx, %rdx
+  47 0049 C7049000 		movl	$0, (%rax,%rdx,4)
+  47      000000
+  48 0050 EB1E     		jmp	.L5
+  49              	.L4:
+  21:dijkstra.c    ****             else
+  22:dijkstra.c    ****                 g->weight[i][j] = INF;  // немає ребра
+  50              		.loc 1 22 33
+  51 0052 488B45E8 		movq	-24(%rbp), %rax
+  52 0056 8B55F8   		movl	-8(%rbp), %edx
+  53 0059 4863D2   		movslq	%edx, %rdx
+  54 005c 8B4DFC   		movl	-4(%rbp), %ecx
+  55 005f 4863C9   		movslq	%ecx, %rcx
+  56 0062 486BC964 		imulq	$100, %rcx, %rcx
+  57 0066 4801CA   		addq	%rcx, %rdx
+  58 0069 C70490FF 		movl	$2147483647, (%rax,%rdx,4)
+  58      FFFF7F
+  59              	.L5:
+  18:dijkstra.c    ****             if (i == j)
+  60              		.loc 1 18 33 discriminator 2
+  61 0070 8345F801 		addl	$1, -8(%rbp)
+  62              	.L3:
+  18:dijkstra.c    ****             if (i == j)
+  63              		.loc 1 18 27 discriminator 1
+  64 0074 8B45F8   		movl	-8(%rbp), %eax
+  65 0077 3B45E4   		cmpl	-28(%rbp), %eax
+  66 007a 7CAE     		jl	.L6
+  67              	.LBE3:
+  17:dijkstra.c    ****         for (int j = 0; j < v; j++) {
+  68              		.loc 1 17 29 discriminator 2
+  69 007c 8345FC01 		addl	$1, -4(%rbp)
+  70              	.L2:
+  17:dijkstra.c    ****         for (int j = 0; j < v; j++) {
+  71              		.loc 1 17 23 discriminator 1
+  72 0080 8B45FC   		movl	-4(%rbp), %eax
+  73 0083 3B45E4   		cmpl	-28(%rbp), %eax
+  74 0086 7C99     		jl	.L7
+  75              	.LBE2:
+  23:dijkstra.c    ****         }
+  24:dijkstra.c    ****     }
+  25:dijkstra.c    **** }
+  76              		.loc 1 25 1
+  77 0088 90       		nop
+  78 0089 90       		nop
+  79 008a 5D       		popq	%rbp
+  80 0031 02870C07 		.cfi_def_cfa 7, 8
+  80      08
+  81 008b C3       		ret
+  82 0036 0000     		.cfi_endproc
+  83              	.LFE6:
+  85              		.globl	addEdge
+  87              	addEdge:
+  88              	.LFB7:
+  26:dijkstra.c    **** 
+  27:dijkstra.c    **** // Додавання зважено ребра
+  28:dijkstra.c    **** void addEdge(Graph *g, int u, int v, int w) {
+  89              		.loc 1 28 45
+  90 0038 1C000000 		.cfi_startproc
+  90      3C000000 
+  90      00000000 
+  90      4E000000 
+  90      00
+  91 008c 55       		pushq	%rbp
+  92 0049 410E10   		.cfi_def_cfa_offset 16
+  93 004c 8602     		.cfi_offset 6, -16
+  94 008d 4889E5   		movq	%rsp, %rbp
+  95 004e 430D06   		.cfi_def_cfa_register 6
+  96 0090 48897DF8 		movq	%rdi, -8(%rbp)
+  97 0094 8975F4   		movl	%esi, -12(%rbp)
+  98 0097 8955F0   		movl	%edx, -16(%rbp)
+  99 009a 894DEC   		movl	%ecx, -20(%rbp)
+  29:dijkstra.c    ****     g->weight[u][v] = w;
+ 100              		.loc 1 29 21
+ 101 009d 488B45F8 		movq	-8(%rbp), %rax
+ 102 00a1 8B55F0   		movl	-16(%rbp), %edx
+ 103 00a4 4863D2   		movslq	%edx, %rdx
+ 104 00a7 8B4DF4   		movl	-12(%rbp), %ecx
+ 105 00aa 4863C9   		movslq	%ecx, %rcx
+ 106 00ad 486BC964 		imulq	$100, %rcx, %rcx
+ 107 00b1 4801D1   		addq	%rdx, %rcx
+ 108 00b4 8B55EC   		movl	-20(%rbp), %edx
+ 109 00b7 891488   		movl	%edx, (%rax,%rcx,4)
+  30:dijkstra.c    ****     g->weight[v][u] = w;  // для неорієнтованого графа
+ 110              		.loc 1 30 21
+ 111 00ba 488B45F8 		movq	-8(%rbp), %rax
+ 112 00be 8B55F4   		movl	-12(%rbp), %edx
+ 113 00c1 4863D2   		movslq	%edx, %rdx
+ 114 00c4 8B4DF0   		movl	-16(%rbp), %ecx
+ 115 00c7 4863C9   		movslq	%ecx, %rcx
+ 116 00ca 486BC964 		imulq	$100, %rcx, %rcx
+ 117 00ce 4801D1   		addq	%rdx, %rcx
+ 118 00d1 8B55EC   		movl	-20(%rbp), %edx
+ 119 00d4 891488   		movl	%edx, (%rax,%rcx,4)
+  31:dijkstra.c    **** }
+ 120              		.loc 1 31 1
+ 121 00d7 90       		nop
+ 122 00d8 5D       		popq	%rbp
+ 123 0051 02490C07 		.cfi_def_cfa 7, 8
+ 123      08
+ 124 00d9 C3       		ret
+ 125 0056 0000     		.cfi_endproc
+ 126              	.LFE7:
+ 128              		.globl	minDistance
+ 130              	minDistance:
+ 131              	.LFB8:
+  32:dijkstra.c    **** 
+  33:dijkstra.c    **** // Знаходження вершини з мінімальною відстанню серед н
+  34:dijkstra.c    **** int minDistance(int dist[], int visited[], int vertices) {
+ 132              		.loc 1 34 58
+ 133 0058 1C000000 		.cfi_startproc
+ 133      5C000000 
+ 133      00000000 
+ 133      8B000000 
+ 133      00
+ 134 00da 55       		pushq	%rbp
+ 135 0069 410E10   		.cfi_def_cfa_offset 16
+ 136 006c 8602     		.cfi_offset 6, -16
+ 137 00db 4889E5   		movq	%rsp, %rbp
+ 138 006e 430D06   		.cfi_def_cfa_register 6
+ 139 00de 48897DE8 		movq	%rdi, -24(%rbp)
+ 140 00e2 488975E0 		movq	%rsi, -32(%rbp)
+ 141 00e6 8955DC   		movl	%edx, -36(%rbp)
+  35:dijkstra.c    ****     int minDist = INF;
+ 142              		.loc 1 35 9
+ 143 00e9 C745FCFF 		movl	$2147483647, -4(%rbp)
+ 143      FFFF7F
+  36:dijkstra.c    ****     int minVertex = -1;
+ 144              		.loc 1 36 9
+ 145 00f0 C745F8FF 		movl	$-1, -8(%rbp)
+ 145      FFFFFF
+ 146              	.LBB4:
+  37:dijkstra.c    ****     
+  38:dijkstra.c    ****     for (int v = 0; v < vertices; v++) {
+ 147              		.loc 1 38 14
+ 148 00f7 C745F400 		movl	$0, -12(%rbp)
+ 148      000000
+ 149              		.loc 1 38 5
+ 150 00fe EB58     		jmp	.L10
+ 151              	.L12:
+  39:dijkstra.c    ****         if (!visited[v] && dist[v] < minDist) {
+ 152              		.loc 1 39 21
+ 153 0100 8B45F4   		movl	-12(%rbp), %eax
+ 154 0103 4898     		cltq
+ 155 0105 488D1485 		leaq	0(,%rax,4), %rdx
+ 155      00000000 
+ 156 010d 488B45E0 		movq	-32(%rbp), %rax
+ 157 0111 4801D0   		addq	%rdx, %rax
+ 158 0114 8B00     		movl	(%rax), %eax
+ 159              		.loc 1 39 12
+ 160 0116 85C0     		testl	%eax, %eax
+ 161 0118 753A     		jne	.L11
+ 162              		.loc 1 39 32 discriminator 1
+ 163 011a 8B45F4   		movl	-12(%rbp), %eax
+ 164 011d 4898     		cltq
+ 165 011f 488D1485 		leaq	0(,%rax,4), %rdx
+ 165      00000000 
+ 166 0127 488B45E8 		movq	-24(%rbp), %rax
+ 167 012b 4801D0   		addq	%rdx, %rax
+ 168 012e 8B00     		movl	(%rax), %eax
+ 169              		.loc 1 39 25 discriminator 1
+ 170 0130 3945FC   		cmpl	%eax, -4(%rbp)
+ 171 0133 7E1F     		jle	.L11
+  40:dijkstra.c    ****             minDist = dist[v];
+ 172              		.loc 1 40 27
+ 173 0135 8B45F4   		movl	-12(%rbp), %eax
+ 174 0138 4898     		cltq
+ 175 013a 488D1485 		leaq	0(,%rax,4), %rdx
+ 175      00000000 
+ 176 0142 488B45E8 		movq	-24(%rbp), %rax
+ 177 0146 4801D0   		addq	%rdx, %rax
+ 178              		.loc 1 40 21
+ 179 0149 8B00     		movl	(%rax), %eax
+ 180 014b 8945FC   		movl	%eax, -4(%rbp)
+  41:dijkstra.c    ****             minVertex = v;
+ 181              		.loc 1 41 23
+ 182 014e 8B45F4   		movl	-12(%rbp), %eax
+ 183 0151 8945F8   		movl	%eax, -8(%rbp)
+ 184              	.L11:
+  38:dijkstra.c    ****         if (!visited[v] && dist[v] < minDist) {
+ 185              		.loc 1 38 36 discriminator 2
+ 186 0154 8345F401 		addl	$1, -12(%rbp)
+ 187              	.L10:
+  38:dijkstra.c    ****         if (!visited[v] && dist[v] < minDist) {
+ 188              		.loc 1 38 23 discriminator 1
+ 189 0158 8B45F4   		movl	-12(%rbp), %eax
+ 190 015b 3B45DC   		cmpl	-36(%rbp), %eax
+ 191 015e 7CA0     		jl	.L12
+ 192              	.LBE4:
+  42:dijkstra.c    ****         }
+  43:dijkstra.c    ****     }
+  44:dijkstra.c    ****     return minVertex;
+ 193              		.loc 1 44 12
+ 194 0160 8B45F8   		movl	-8(%rbp), %eax
+  45:dijkstra.c    **** }
+ 195              		.loc 1 45 1
+ 196 0163 5D       		popq	%rbp
+ 197 0071 02860C07 		.cfi_def_cfa 7, 8
+ 197      08
+ 198 0164 C3       		ret
+ 199 0076 0000     		.cfi_endproc
+ 200              	.LFE8:
+ 202              		.section	.rodata
+ 203              		.align 8
+ 204              	.LC0:
+ 205 0000 44696A6B 		.string	"Dijkstra's Algorithm - Shortest Path from vertex %d:\n\n"
+ 205      73747261 
+ 205      27732041 
+ 205      6C676F72 
+ 205      6974686D 
+ 206              	.LC1:
+ 207 0037 56657274 		.string	"Vertex | Distance"
+ 207      6578207C 
+ 207      20446973 
+ 207      74616E63 
+ 207      6500
+ 208              	.LC2:
+ 209 0049 2D2D2D2D 		.string	"-------|----------"
+ 209      2D2D2D7C 
+ 209      2D2D2D2D 
+ 209      2D2D2D2D 
+ 209      2D2D00
+ 210              	.LC3:
+ 211 005c 20202025 		.string	"   %d   |    INF\n"
+ 211      64202020 
+ 211      7C202020 
+ 211      20494E46 
+ 211      0A00
+ 212              	.LC4:
+ 213 006e 20202025 		.string	"   %d   |    %d\n"
+ 213      64202020 
+ 213      7C202020 
+ 213      2025640A 
+ 213      00
+ 214              		.text
+ 215              		.globl	dijkstra
+ 217              	dijkstra:
+ 218              	.LFB9:
+  46:dijkstra.c    **** 
+  47:dijkstra.c    **** // Алгоритм Дейкстри
+  48:dijkstra.c    **** void dijkstra(Graph *g, int src) {
+ 219              		.loc 1 48 34
+ 220 0078 1C000000 		.cfi_startproc
+ 220      7C000000 
+ 220      00000000 
+ 220      93020000 
+ 220      00
+ 221 0165 55       		pushq	%rbp
+ 222 0089 410E10   		.cfi_def_cfa_offset 16
+ 223 008c 8602     		.cfi_offset 6, -16
+ 224 0166 4889E5   		movq	%rsp, %rbp
+ 225 008e 430D06   		.cfi_def_cfa_register 6
+ 226 0169 4881ECE0 		subq	$1248, %rsp
+ 226      040000
+ 227 0170 4889BD28 		movq	%rdi, -1240(%rbp)
+ 227      FBFFFF
+ 228 0177 89B524FB 		movl	%esi, -1244(%rbp)
+ 228      FFFF
+ 229              	.LBB5:
+  49:dijkstra.c    ****     int dist[MAX_VERTICES];
+  50:dijkstra.c    ****     int visited[MAX_VERTICES];
+  51:dijkstra.c    ****     int prev[MAX_VERTICES];
+  52:dijkstra.c    ****     
+  53:dijkstra.c    ****     // Ініціалізація
+  54:dijkstra.c    ****     for (int i = 0; i < g->vertices; i++) {
+ 230              		.loc 1 54 14
+ 231 017d C745FC00 		movl	$0, -4(%rbp)
+ 231      000000
+ 232              		.loc 1 54 5
+ 233 0184 EB34     		jmp	.L15
+ 234              	.L16:
+  55:dijkstra.c    ****         dist[i] = INF;
+ 235              		.loc 1 55 17
+ 236 0186 8B45FC   		movl	-4(%rbp), %eax
+ 237 0189 4898     		cltq
+ 238 018b C7848550 		movl	$2147483647, -432(%rbp,%rax,4)
+ 238      FEFFFFFF 
+ 238      FFFF7F
+  56:dijkstra.c    ****         visited[i] = 0;
+ 239              		.loc 1 56 20
+ 240 0196 8B45FC   		movl	-4(%rbp), %eax
+ 241 0199 4898     		cltq
+ 242 019b C78485C0 		movl	$0, -832(%rbp,%rax,4)
+ 242      FCFFFF00 
+ 242      000000
+  57:dijkstra.c    ****         prev[i] = -1;
+ 243              		.loc 1 57 17
+ 244 01a6 8B45FC   		movl	-4(%rbp), %eax
+ 245 01a9 4898     		cltq
+ 246 01ab C7848530 		movl	$-1, -1232(%rbp,%rax,4)
+ 246      FBFFFFFF 
+ 246      FFFFFF
+  54:dijkstra.c    ****         dist[i] = INF;
+ 247              		.loc 1 54 39 discriminator 3
+ 248 01b6 8345FC01 		addl	$1, -4(%rbp)
+ 249              	.L15:
+  54:dijkstra.c    ****         dist[i] = INF;
+ 250              		.loc 1 54 26 discriminator 1
+ 251 01ba 488B8528 		movq	-1240(%rbp), %rax
+ 251      FBFFFF
+ 252 01c1 8B80409C 		movl	40000(%rax), %eax
+ 252      0000
+  54:dijkstra.c    ****         dist[i] = INF;
+ 253              		.loc 1 54 23 discriminator 1
+ 254 01c7 3945FC   		cmpl	%eax, -4(%rbp)
+ 255 01ca 7CBA     		jl	.L16
+ 256              	.LBE5:
+  58:dijkstra.c    ****     }
+  59:dijkstra.c    ****     dist[src] = 0;
+ 257              		.loc 1 59 15
+ 258 01cc 8B8524FB 		movl	-1244(%rbp), %eax
+ 258      FFFF
+ 259 01d2 4898     		cltq
+ 260 01d4 C7848550 		movl	$0, -432(%rbp,%rax,4)
+ 260      FEFFFF00 
+ 260      000000
+ 261              	.LBB6:
+  60:dijkstra.c    ****     
+  61:dijkstra.c    ****     // Основний цикл
+  62:dijkstra.c    ****     for (int count = 0; count < g->vertices - 1; count++) {
+ 262              		.loc 1 62 14
+ 263 01df C745F800 		movl	$0, -8(%rbp)
+ 263      000000
+ 264              		.loc 1 62 5
+ 265 01e6 E9410100 		jmp	.L17
+ 265      00
+ 266              	.L23:
+ 267              	.LBB7:
+  63:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+  64:dijkstra.c    ****         int u = minDistance(dist, visited, g->vertices);
+ 268              		.loc 1 64 17
+ 269 01eb 488B8528 		movq	-1240(%rbp), %rax
+ 269      FBFFFF
+ 270 01f2 8B90409C 		movl	40000(%rax), %edx
+ 270      0000
+ 271 01f8 488D8DC0 		leaq	-832(%rbp), %rcx
+ 271      FCFFFF
+ 272 01ff 488D8550 		leaq	-432(%rbp), %rax
+ 272      FEFFFF
+ 273 0206 4889CE   		movq	%rcx, %rsi
+ 274 0209 4889C7   		movq	%rax, %rdi
+ 275 020c E8000000 		call	minDistance
+ 275      00
+ 276 0211 8945EC   		movl	%eax, -20(%rbp)
+  65:dijkstra.c    ****         
+  66:dijkstra.c    ****         if (u == -1) break;
+ 277              		.loc 1 66 12
+ 278 0214 837DECFF 		cmpl	$-1, -20(%rbp)
+ 279 0218 0F842901 		je	.L28
+ 279      0000
+  67:dijkstra.c    ****         
+  68:dijkstra.c    ****         visited[u] = 1;
+ 280              		.loc 1 68 20
+ 281 021e 8B45EC   		movl	-20(%rbp), %eax
+ 282 0221 4898     		cltq
+ 283 0223 C78485C0 		movl	$1, -832(%rbp,%rax,4)
+ 283      FCFFFF01 
+ 283      000000
+ 284              	.LBB8:
+  69:dijkstra.c    ****         
+  70:dijkstra.c    ****         // Релаксація ребер
+  71:dijkstra.c    ****         for (int v = 0; v < g->vertices; v++) {
+ 285              		.loc 1 71 18
+ 286 022e C745F400 		movl	$0, -12(%rbp)
+ 286      000000
+ 287              		.loc 1 71 9
+ 288 0235 E9D80000 		jmp	.L20
+ 288      00
+ 289              	.L22:
+  72:dijkstra.c    ****             if (!visited[v] && 
+ 290              		.loc 1 72 25
+ 291 023a 8B45F4   		movl	-12(%rbp), %eax
+ 292 023d 4898     		cltq
+ 293 023f 8B8485C0 		movl	-832(%rbp,%rax,4), %eax
+ 293      FCFFFF
+ 294              		.loc 1 72 16
+ 295 0246 85C0     		testl	%eax, %eax
+ 296 0248 0F85C000 		jne	.L21
+ 296      0000
+  73:dijkstra.c    ****                 g->weight[u][v] != INF && 
+ 297              		.loc 1 73 29
+ 298 024e 488B8528 		movq	-1240(%rbp), %rax
+ 298      FBFFFF
+ 299 0255 8B55F4   		movl	-12(%rbp), %edx
+ 300 0258 4863D2   		movslq	%edx, %rdx
+ 301 025b 8B4DEC   		movl	-20(%rbp), %ecx
+ 302 025e 4863C9   		movslq	%ecx, %rcx
+ 303 0261 486BC964 		imulq	$100, %rcx, %rcx
+ 304 0265 4801CA   		addq	%rcx, %rdx
+ 305 0268 8B0490   		movl	(%rax,%rdx,4), %eax
+  72:dijkstra.c    ****             if (!visited[v] && 
+ 306              		.loc 1 72 29 discriminator 1
+ 307 026b 3DFFFFFF 		cmpl	$2147483647, %eax
+ 307      7F
+ 308 0270 0F849800 		je	.L21
+ 308      0000
+  74:dijkstra.c    ****                 dist[u] != INF && 
+ 309              		.loc 1 74 21
+ 310 0276 8B45EC   		movl	-20(%rbp), %eax
+ 311 0279 4898     		cltq
+ 312 027b 8B848550 		movl	-432(%rbp,%rax,4), %eax
+ 312      FEFFFF
+  73:dijkstra.c    ****                 g->weight[u][v] != INF && 
+ 313              		.loc 1 73 40
+ 314 0282 3DFFFFFF 		cmpl	$2147483647, %eax
+ 314      7F
+ 315 0287 0F848100 		je	.L21
+ 315      0000
+  75:dijkstra.c    ****                 dist[u] + g->weight[u][v] < dist[v]) {
+ 316              		.loc 1 75 21
+ 317 028d 8B45EC   		movl	-20(%rbp), %eax
+ 318 0290 4898     		cltq
+ 319 0292 8B948550 		movl	-432(%rbp,%rax,4), %edx
+ 319      FEFFFF
+ 320              		.loc 1 75 39
+ 321 0299 488B8528 		movq	-1240(%rbp), %rax
+ 321      FBFFFF
+ 322 02a0 8B4DF4   		movl	-12(%rbp), %ecx
+ 323 02a3 4863C9   		movslq	%ecx, %rcx
+ 324 02a6 8B75EC   		movl	-20(%rbp), %esi
+ 325 02a9 4863F6   		movslq	%esi, %rsi
+ 326 02ac 486BF664 		imulq	$100, %rsi, %rsi
+ 327 02b0 4801F1   		addq	%rsi, %rcx
+ 328 02b3 8B0488   		movl	(%rax,%rcx,4), %eax
+ 329              		.loc 1 75 25
+ 330 02b6 01C2     		addl	%eax, %edx
+ 331              		.loc 1 75 49
+ 332 02b8 8B45F4   		movl	-12(%rbp), %eax
+ 333 02bb 4898     		cltq
+ 334 02bd 8B848550 		movl	-432(%rbp,%rax,4), %eax
+ 334      FEFFFF
+  74:dijkstra.c    ****                 dist[u] != INF && 
+ 335              		.loc 1 74 32
+ 336 02c4 39C2     		cmpl	%eax, %edx
+ 337 02c6 7D46     		jge	.L21
+  76:dijkstra.c    ****                 
+  77:dijkstra.c    ****                 dist[v] = dist[u] + g->weight[u][v];
+ 338              		.loc 1 77 31
+ 339 02c8 8B45EC   		movl	-20(%rbp), %eax
+ 340 02cb 4898     		cltq
+ 341 02cd 8B948550 		movl	-432(%rbp,%rax,4), %edx
+ 341      FEFFFF
+ 342              		.loc 1 77 49
+ 343 02d4 488B8528 		movq	-1240(%rbp), %rax
+ 343      FBFFFF
+ 344 02db 8B4DF4   		movl	-12(%rbp), %ecx
+ 345 02de 4863C9   		movslq	%ecx, %rcx
+ 346 02e1 8B75EC   		movl	-20(%rbp), %esi
+ 347 02e4 4863F6   		movslq	%esi, %rsi
+ 348 02e7 486BF664 		imulq	$100, %rsi, %rsi
+ 349 02eb 4801F1   		addq	%rsi, %rcx
+ 350 02ee 8B0488   		movl	(%rax,%rcx,4), %eax
+ 351              		.loc 1 77 35
+ 352 02f1 01C2     		addl	%eax, %edx
+ 353              		.loc 1 77 25
+ 354 02f3 8B45F4   		movl	-12(%rbp), %eax
+ 355 02f6 4898     		cltq
+ 356 02f8 89948550 		movl	%edx, -432(%rbp,%rax,4)
+ 356      FEFFFF
+  78:dijkstra.c    ****                 prev[v] = u;
+ 357              		.loc 1 78 25
+ 358 02ff 8B45F4   		movl	-12(%rbp), %eax
+ 359 0302 4898     		cltq
+ 360 0304 8B55EC   		movl	-20(%rbp), %edx
+ 361 0307 89948530 		movl	%edx, -1232(%rbp,%rax,4)
+ 361      FBFFFF
+ 362              	.L21:
+  71:dijkstra.c    ****             if (!visited[v] && 
+ 363              		.loc 1 71 43 discriminator 2
+ 364 030e 8345F401 		addl	$1, -12(%rbp)
+ 365              	.L20:
+  71:dijkstra.c    ****             if (!visited[v] && 
+ 366              		.loc 1 71 30 discriminator 1
+ 367 0312 488B8528 		movq	-1240(%rbp), %rax
+ 367      FBFFFF
+ 368 0319 8B80409C 		movl	40000(%rax), %eax
+ 368      0000
+  71:dijkstra.c    ****             if (!visited[v] && 
+ 369              		.loc 1 71 27 discriminator 1
+ 370 031f 3945F4   		cmpl	%eax, -12(%rbp)
+ 371 0322 0F8C12FF 		jl	.L22
+ 371      FFFF
+ 372              	.LBE8:
+ 373              	.LBE7:
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 374              		.loc 1 62 55 discriminator 2
+ 375 0328 8345F801 		addl	$1, -8(%rbp)
+ 376              	.L17:
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 377              		.loc 1 62 34 discriminator 1
+ 378 032c 488B8528 		movq	-1240(%rbp), %rax
+ 378      FBFFFF
+ 379 0333 8B80409C 		movl	40000(%rax), %eax
+ 379      0000
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 380              		.loc 1 62 45 discriminator 1
+ 381 0339 83E801   		subl	$1, %eax
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 382              		.loc 1 62 31 discriminator 1
+ 383 033c 3945F8   		cmpl	%eax, -8(%rbp)
+ 384 033f 0F8CA6FE 		jl	.L23
+ 384      FFFF
+ 385 0345 EB01     		jmp	.L19
+ 386              	.L28:
+ 387              	.LBB9:
+  66:dijkstra.c    ****         
+ 388              		.loc 1 66 22
+ 389 0347 90       		nop
+ 390              	.L19:
+ 391              	.LBE9:
+ 392              	.LBE6:
+  79:dijkstra.c    ****             }
+  80:dijkstra.c    ****         }
+  81:dijkstra.c    ****     }
+  82:dijkstra.c    ****     
+  83:dijkstra.c    ****     // Виведення результатів
+  84:dijkstra.c    ****     printf("Dijkstra's Algorithm - Shortest Path from vertex %d:\n\n", src);
+ 393              		.loc 1 84 5
+ 394 0348 8B8524FB 		movl	-1244(%rbp), %eax
+ 394      FFFF
+ 395 034e 488D1500 		leaq	.LC0(%rip), %rdx
+ 395      000000
+ 396 0355 89C6     		movl	%eax, %esi
+ 397 0357 4889D7   		movq	%rdx, %rdi
+ 398 035a B8000000 		movl	$0, %eax
+ 398      00
+ 399 035f E8000000 		call	printf@PLT
+ 399      00
+  85:dijkstra.c    ****     printf("Vertex | Distance\n");
+ 400              		.loc 1 85 5
+ 401 0364 488D0500 		leaq	.LC1(%rip), %rax
+ 401      000000
+ 402 036b 4889C7   		movq	%rax, %rdi
+ 403 036e E8000000 		call	puts@PLT
+ 403      00
+  86:dijkstra.c    ****     printf("-------|----------\n");
+ 404              		.loc 1 86 5
+ 405 0373 488D0500 		leaq	.LC2(%rip), %rax
+ 405      000000
+ 406 037a 4889C7   		movq	%rax, %rdi
+ 407 037d E8000000 		call	puts@PLT
+ 407      00
+ 408              	.LBB10:
+  87:dijkstra.c    ****     for (int i = 0; i < g->vertices; i++) {
+ 409              		.loc 1 87 14
+ 410 0382 C745F000 		movl	$0, -16(%rbp)
+ 410      000000
+ 411              		.loc 1 87 5
+ 412 0389 EB57     		jmp	.L24
+ 413              	.L27:
+  88:dijkstra.c    ****         if (dist[i] == INF)
+ 414              		.loc 1 88 17
+ 415 038b 8B45F0   		movl	-16(%rbp), %eax
+ 416 038e 4898     		cltq
+ 417 0390 8B848550 		movl	-432(%rbp,%rax,4), %eax
+ 417      FEFFFF
+ 418              		.loc 1 88 12
+ 419 0397 3DFFFFFF 		cmpl	$2147483647, %eax
+ 419      7F
+ 420 039c 751B     		jne	.L25
+  89:dijkstra.c    ****             printf("   %d   |    INF\n", i);
+ 421              		.loc 1 89 13
+ 422 039e 8B45F0   		movl	-16(%rbp), %eax
+ 423 03a1 488D1500 		leaq	.LC3(%rip), %rdx
+ 423      000000
+ 424 03a8 89C6     		movl	%eax, %esi
+ 425 03aa 4889D7   		movq	%rdx, %rdi
+ 426 03ad B8000000 		movl	$0, %eax
+ 426      00
+ 427 03b2 E8000000 		call	printf@PLT
+ 427      00
+ 428 03b7 EB25     		jmp	.L26
+ 429              	.L25:
+  90:dijkstra.c    ****         else
+  91:dijkstra.c    ****             printf("   %d   |    %d\n", i, dist[i]);
+ 430              		.loc 1 91 13
+ 431 03b9 8B45F0   		movl	-16(%rbp), %eax
+ 432 03bc 4898     		cltq
+ 433 03be 8B948550 		movl	-432(%rbp,%rax,4), %edx
+ 433      FEFFFF
+ 434 03c5 8B45F0   		movl	-16(%rbp), %eax
+ 435 03c8 488D0D00 		leaq	.LC4(%rip), %rcx
+ 435      000000
+ 436 03cf 89C6     		movl	%eax, %esi
+ 437 03d1 4889CF   		movq	%rcx, %rdi
+ 438 03d4 B8000000 		movl	$0, %eax
+ 438      00
+ 439 03d9 E8000000 		call	printf@PLT
+ 439      00
+ 440              	.L26:
+  87:dijkstra.c    ****         if (dist[i] == INF)
+ 441              		.loc 1 87 39 discriminator 2
+ 442 03de 8345F001 		addl	$1, -16(%rbp)
+ 443              	.L24:
+  87:dijkstra.c    ****         if (dist[i] == INF)
+ 444              		.loc 1 87 26 discriminator 1
+ 445 03e2 488B8528 		movq	-1240(%rbp), %rax
+ 445      FBFFFF
+ 446 03e9 8B80409C 		movl	40000(%rax), %eax
+ 446      0000
+  87:dijkstra.c    ****         if (dist[i] == INF)
+ 447              		.loc 1 87 23 discriminator 1
+ 448 03ef 3945F0   		cmpl	%eax, -16(%rbp)
+ 449 03f2 7C97     		jl	.L27
+ 450              	.LBE10:
+  92:dijkstra.c    ****     }
+  93:dijkstra.c    **** }
+ 451              		.loc 1 93 1
+ 452 03f4 90       		nop
+ 453 03f5 90       		nop
+ 454 03f6 C9       		leave
+ 455 0091 038E020C 		.cfi_def_cfa 7, 8
+ 455      0708
+ 456 03f7 C3       		ret
+ 457 0097 00       		.cfi_endproc
+ 458              	.LFE9:
+ 460              		.globl	main
+ 462              	main:
+ 463              	.LFB10:
+  94:dijkstra.c    **** 
+  95:dijkstra.c    **** int main() {
+ 464              		.loc 1 95 12
+ 465 0098 1C000000 		.cfi_startproc
+ 465      9C000000 
+ 465      00000000 
+ 465      48010000 
+ 465      00
+ 466 03f8 55       		pushq	%rbp
+ 467 00a9 410E10   		.cfi_def_cfa_offset 16
+ 468 00ac 8602     		.cfi_offset 6, -16
+ 469 03f9 4889E5   		movq	%rsp, %rbp
+ 470 00ae 430D06   		.cfi_def_cfa_register 6
+ 471 03fc 4881EC50 		subq	$40016, %rsp
+ 471      9C0000
+  96:dijkstra.c    ****     Graph g;
+  97:dijkstra.c    ****     initGraph(&g, 6);
+ 472              		.loc 1 97 5
+ 473 0403 488D85B0 		leaq	-40016(%rbp), %rax
+ 473      63FFFF
+ 474 040a BE060000 		movl	$6, %esi
+ 474      00
+ 475 040f 4889C7   		movq	%rax, %rdi
+ 476 0412 E8000000 		call	initGraph
+ 476      00
+  98:dijkstra.c    ****     
+  99:dijkstra.c    ****     // Додавання ребер (u, v, вага)
+ 100:dijkstra.c    ****     addEdge(&g, 0, 1, 4);
+ 477              		.loc 1 100 5
+ 478 0417 488D85B0 		leaq	-40016(%rbp), %rax
+ 478      63FFFF
+ 479 041e B9040000 		movl	$4, %ecx
+ 479      00
+ 480 0423 BA010000 		movl	$1, %edx
+ 480      00
+ 481 0428 BE000000 		movl	$0, %esi
+ 481      00
+ 482 042d 4889C7   		movq	%rax, %rdi
+ 483 0430 E8000000 		call	addEdge
+ 483      00
+ 101:dijkstra.c    ****     addEdge(&g, 0, 2, 2);
+ 484              		.loc 1 101 5
+ 485 0435 488D85B0 		leaq	-40016(%rbp), %rax
+ 485      63FFFF
+ 486 043c B9020000 		movl	$2, %ecx
+ 486      00
+ 487 0441 BA020000 		movl	$2, %edx
+ 487      00
+ 488 0446 BE000000 		movl	$0, %esi
+ 488      00
+ 489 044b 4889C7   		movq	%rax, %rdi
+ 490 044e E8000000 		call	addEdge
+ 490      00
+ 102:dijkstra.c    ****     addEdge(&g, 1, 2, 1);
+ 491              		.loc 1 102 5
+ 492 0453 488D85B0 		leaq	-40016(%rbp), %rax
+ 492      63FFFF
+ 493 045a B9010000 		movl	$1, %ecx
+ 493      00
+ 494 045f BA020000 		movl	$2, %edx
+ 494      00
+ 495 0464 BE010000 		movl	$1, %esi
+ 495      00
+ 496 0469 4889C7   		movq	%rax, %rdi
+ 497 046c E8000000 		call	addEdge
+ 497      00
+ 103:dijkstra.c    ****     addEdge(&g, 1, 3, 5);
+ 498              		.loc 1 103 5
+ 499 0471 488D85B0 		leaq	-40016(%rbp), %rax
+ 499      63FFFF
+ 500 0478 B9050000 		movl	$5, %ecx
+ 500      00
+ 501 047d BA030000 		movl	$3, %edx
+ 501      00
+ 502 0482 BE010000 		movl	$1, %esi
+ 502      00
+ 503 0487 4889C7   		movq	%rax, %rdi
+ 504 048a E8000000 		call	addEdge
+ 504      00
+ 104:dijkstra.c    ****     addEdge(&g, 2, 3, 8);
+ 505              		.loc 1 104 5
+ 506 048f 488D85B0 		leaq	-40016(%rbp), %rax
+ 506      63FFFF
+ 507 0496 B9080000 		movl	$8, %ecx
+ 507      00
+ 508 049b BA030000 		movl	$3, %edx
+ 508      00
+ 509 04a0 BE020000 		movl	$2, %esi
+ 509      00
+ 510 04a5 4889C7   		movq	%rax, %rdi
+ 511 04a8 E8000000 		call	addEdge
+ 511      00
+ 105:dijkstra.c    ****     addEdge(&g, 2, 4, 10);
+ 512              		.loc 1 105 5
+ 513 04ad 488D85B0 		leaq	-40016(%rbp), %rax
+ 513      63FFFF
+ 514 04b4 B90A0000 		movl	$10, %ecx
+ 514      00
+ 515 04b9 BA040000 		movl	$4, %edx
+ 515      00
+ 516 04be BE020000 		movl	$2, %esi
+ 516      00
+ 517 04c3 4889C7   		movq	%rax, %rdi
+ 518 04c6 E8000000 		call	addEdge
+ 518      00
+ 106:dijkstra.c    ****     addEdge(&g, 3, 4, 2);
+ 519              		.loc 1 106 5
+ 520 04cb 488D85B0 		leaq	-40016(%rbp), %rax
+ 520      63FFFF
+ 521 04d2 B9020000 		movl	$2, %ecx
+ 521      00
+ 522 04d7 BA040000 		movl	$4, %edx
+ 522      00
+ 523 04dc BE030000 		movl	$3, %esi
+ 523      00
+ 524 04e1 4889C7   		movq	%rax, %rdi
+ 525 04e4 E8000000 		call	addEdge
+ 525      00
+ 107:dijkstra.c    ****     addEdge(&g, 3, 5, 6);
+ 526              		.loc 1 107 5
+ 527 04e9 488D85B0 		leaq	-40016(%rbp), %rax
+ 527      63FFFF
+ 528 04f0 B9060000 		movl	$6, %ecx
+ 528      00
+ 529 04f5 BA050000 		movl	$5, %edx
+ 529      00
+ 530 04fa BE030000 		movl	$3, %esi
+ 530      00
+ 531 04ff 4889C7   		movq	%rax, %rdi
+ 532 0502 E8000000 		call	addEdge
+ 532      00
+ 108:dijkstra.c    ****     addEdge(&g, 4, 5, 3);
+ 533              		.loc 1 108 5
+ 534 0507 488D85B0 		leaq	-40016(%rbp), %rax
+ 534      63FFFF
+ 535 050e B9030000 		movl	$3, %ecx
+ 535      00
+ 536 0513 BA050000 		movl	$5, %edx
+ 536      00
+ 537 0518 BE040000 		movl	$4, %esi
+ 537      00
+ 538 051d 4889C7   		movq	%rax, %rdi
+ 539 0520 E8000000 		call	addEdge
+ 539      00
+ 109:dijkstra.c    ****     
+ 110:dijkstra.c    ****     dijkstra(&g, 0);
+ 540              		.loc 1 110 5
+ 541 0525 488D85B0 		leaq	-40016(%rbp), %rax
+ 541      63FFFF
+ 542 052c BE000000 		movl	$0, %esi
+ 542      00
+ 543 0531 4889C7   		movq	%rax, %rdi
+ 544 0534 E8000000 		call	dijkstra
+ 544      00
+ 111:dijkstra.c    ****     
+ 112:dijkstra.c    ****     return 0;
+ 545              		.loc 1 112 12
+ 546 0539 B8000000 		movl	$0, %eax
+ 546      00
+ 113:dijkstra.c    **** }
+ 547              		.loc 1 113 1
+ 548 053e C9       		leave
+ 549 00b1 0343010C 		.cfi_def_cfa 7, 8
+ 549      0708
+ 550 053f C3       		ret
+ 551 00b7 00       		.cfi_endproc
+ 552              	.LFE10:
+ 554              	.Letext0:
+ 555              		.file 2 "/usr/include/stdio.h"

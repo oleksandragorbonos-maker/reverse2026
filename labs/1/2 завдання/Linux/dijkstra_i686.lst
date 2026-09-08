@@ -1,0 +1,859 @@
+   1              		.file	"dijkstra.c"
+   2              		.text
+   3              	.Ltext0:
+   4              		.file 0 "/home/kali" "dijkstra.c"
+   5              		.globl	initGraph
+   7              	initGraph:
+   8              	.LFB6:
+   9              		.file 1 "dijkstra.c"
+   1:dijkstra.c    **** #include <stdio.h>
+   2:dijkstra.c    **** #include <stdlib.h>
+   3:dijkstra.c    **** #include <limits.h>
+   4:dijkstra.c    **** #include <string.h>
+   5:dijkstra.c    **** 
+   6:dijkstra.c    **** #define MAX_VERTICES 100
+   7:dijkstra.c    **** #define INF INT_MAX
+   8:dijkstra.c    **** 
+   9:dijkstra.c    **** typedef struct {
+  10:dijkstra.c    ****     int weight[MAX_VERTICES][MAX_VERTICES];  // матриця ваг ребер
+  11:dijkstra.c    ****     int vertices;
+  12:dijkstra.c    **** } Graph;
+  13:dijkstra.c    **** 
+  14:dijkstra.c    **** // Ініціалізація графа
+  15:dijkstra.c    **** void initGraph(Graph *g, int v) {
+  10              		.loc 1 15 33
+  11 0000 14000000 		.cfi_startproc
+  11      00000000 
+  11      017A5200 
+  11      017C0801 
+  11      1B0C0404 
+  12 0000 55       		pushl	%ebp
+  13 0029 410E08   		.cfi_def_cfa_offset 8
+  14 002c 8502     		.cfi_offset 5, -8
+  15 0001 89E5     		movl	%esp, %ebp
+  16 002e 420D05   		.cfi_def_cfa_register 5
+  17 0003 83EC10   		subl	$16, %esp
+  18 0006 E8FCFFFF 		call	__x86.get_pc_thunk.ax
+  18      FF
+  19 000b 05010000 		addl	$_GLOBAL_OFFSET_TABLE_, %eax
+  19      00
+  16:dijkstra.c    ****     g->vertices = v;
+  20              		.loc 1 16 17
+  21 0010 8B4508   		movl	8(%ebp), %eax
+  22 0013 8B550C   		movl	12(%ebp), %edx
+  23 0016 8990409C 		movl	%edx, 40000(%eax)
+  23      0000
+  24              	.LBB2:
+  17:dijkstra.c    ****     for (int i = 0; i < v; i++) {
+  25              		.loc 1 17 14
+  26 001c C745FC00 		movl	$0, -4(%ebp)
+  26      000000
+  27              		.loc 1 17 5
+  28 0023 EB4D     		jmp	.L2
+  29              	.L7:
+  30              	.LBB3:
+  18:dijkstra.c    ****         for (int j = 0; j < v; j++) {
+  31              		.loc 1 18 18
+  32 0025 C745F800 		movl	$0, -8(%ebp)
+  32      000000
+  33              		.loc 1 18 9
+  34 002c EB38     		jmp	.L3
+  35              	.L6:
+  19:dijkstra.c    ****             if (i == j)
+  36              		.loc 1 19 16
+  37 002e 8B45FC   		movl	-4(%ebp), %eax
+  38 0031 3B45F8   		cmpl	-8(%ebp), %eax
+  39 0034 7517     		jne	.L4
+  20:dijkstra.c    ****                 g->weight[i][j] = 0;
+  40              		.loc 1 20 33
+  41 0036 8B4508   		movl	8(%ebp), %eax
+  42 0039 8B55FC   		movl	-4(%ebp), %edx
+  43 003c 6BCA64   		imull	$100, %edx, %ecx
+  44 003f 8B55F8   		movl	-8(%ebp), %edx
+  45 0042 01CA     		addl	%ecx, %edx
+  46 0044 C7049000 		movl	$0, (%eax,%edx,4)
+  46      000000
+  47 004b EB15     		jmp	.L5
+  48              	.L4:
+  21:dijkstra.c    ****             else
+  22:dijkstra.c    ****                 g->weight[i][j] = INF;  // немає ребра
+  49              		.loc 1 22 33
+  50 004d 8B4508   		movl	8(%ebp), %eax
+  51 0050 8B55FC   		movl	-4(%ebp), %edx
+  52 0053 6BCA64   		imull	$100, %edx, %ecx
+  53 0056 8B55F8   		movl	-8(%ebp), %edx
+  54 0059 01CA     		addl	%ecx, %edx
+  55 005b C70490FF 		movl	$2147483647, (%eax,%edx,4)
+  55      FFFF7F
+  56              	.L5:
+  18:dijkstra.c    ****             if (i == j)
+  57              		.loc 1 18 33 discriminator 2
+  58 0062 8345F801 		addl	$1, -8(%ebp)
+  59              	.L3:
+  18:dijkstra.c    ****             if (i == j)
+  60              		.loc 1 18 27 discriminator 1
+  61 0066 8B45F8   		movl	-8(%ebp), %eax
+  62 0069 3B450C   		cmpl	12(%ebp), %eax
+  63 006c 7CC0     		jl	.L6
+  64              	.LBE3:
+  17:dijkstra.c    ****         for (int j = 0; j < v; j++) {
+  65              		.loc 1 17 29 discriminator 2
+  66 006e 8345FC01 		addl	$1, -4(%ebp)
+  67              	.L2:
+  17:dijkstra.c    ****         for (int j = 0; j < v; j++) {
+  68              		.loc 1 17 23 discriminator 1
+  69 0072 8B45FC   		movl	-4(%ebp), %eax
+  70 0075 3B450C   		cmpl	12(%ebp), %eax
+  71 0078 7CAB     		jl	.L7
+  72              	.LBE2:
+  23:dijkstra.c    ****         }
+  24:dijkstra.c    ****     }
+  25:dijkstra.c    **** }
+  73              		.loc 1 25 1
+  74 007a 90       		nop
+  75 007b 90       		nop
+  76 007c C9       		leave
+  77 0031 027AC5   		.cfi_restore 5
+  78 0034 0C0404   		.cfi_def_cfa 4, 4
+  79 007d C3       		ret
+  80 0037 00       		.cfi_endproc
+  81              	.LFE6:
+  83              		.globl	addEdge
+  85              	addEdge:
+  86              	.LFB7:
+  26:dijkstra.c    **** 
+  27:dijkstra.c    **** // Додавання зважено ребра
+  28:dijkstra.c    **** void addEdge(Graph *g, int u, int v, int w) {
+  87              		.loc 1 28 45
+  88 0038 1C000000 		.cfi_startproc
+  88      3C000000 
+  88      7E000000 
+  88      38000000 
+  88      00
+  89 007e 55       		pushl	%ebp
+  90 0049 410E08   		.cfi_def_cfa_offset 8
+  91 004c 8502     		.cfi_offset 5, -8
+  92 007f 89E5     		movl	%esp, %ebp
+  93 004e 420D05   		.cfi_def_cfa_register 5
+  94 0081 E8FCFFFF 		call	__x86.get_pc_thunk.ax
+  94      FF
+  95 0086 05010000 		addl	$_GLOBAL_OFFSET_TABLE_, %eax
+  95      00
+  29:dijkstra.c    ****     g->weight[u][v] = w;
+  96              		.loc 1 29 21
+  97 008b 8B4508   		movl	8(%ebp), %eax
+  98 008e 8B550C   		movl	12(%ebp), %edx
+  99 0091 6BCA64   		imull	$100, %edx, %ecx
+ 100 0094 8B5510   		movl	16(%ebp), %edx
+ 101 0097 01D1     		addl	%edx, %ecx
+ 102 0099 8B5514   		movl	20(%ebp), %edx
+ 103 009c 891488   		movl	%edx, (%eax,%ecx,4)
+  30:dijkstra.c    ****     g->weight[v][u] = w;  // для неорієнтованого графа
+ 104              		.loc 1 30 21
+ 105 009f 8B4508   		movl	8(%ebp), %eax
+ 106 00a2 8B5510   		movl	16(%ebp), %edx
+ 107 00a5 6BCA64   		imull	$100, %edx, %ecx
+ 108 00a8 8B550C   		movl	12(%ebp), %edx
+ 109 00ab 01D1     		addl	%edx, %ecx
+ 110 00ad 8B5514   		movl	20(%ebp), %edx
+ 111 00b0 891488   		movl	%edx, (%eax,%ecx,4)
+  31:dijkstra.c    **** }
+ 112              		.loc 1 31 1
+ 113 00b3 90       		nop
+ 114 00b4 5D       		popl	%ebp
+ 115 0051 74C5     		.cfi_restore 5
+ 116 0053 0C0404   		.cfi_def_cfa 4, 4
+ 117 00b5 C3       		ret
+ 118 0056 0000     		.cfi_endproc
+ 119              	.LFE7:
+ 121              		.globl	minDistance
+ 123              	minDistance:
+ 124              	.LFB8:
+  32:dijkstra.c    **** 
+  33:dijkstra.c    **** // Знаходження вершини з мінімальною відстанню серед н
+  34:dijkstra.c    **** int minDistance(int dist[], int visited[], int vertices) {
+ 125              		.loc 1 34 58
+ 126 0058 1C000000 		.cfi_startproc
+ 126      5C000000 
+ 126      B6000000 
+ 126      7D000000 
+ 126      00
+ 127 00b6 55       		pushl	%ebp
+ 128 0069 410E08   		.cfi_def_cfa_offset 8
+ 129 006c 8502     		.cfi_offset 5, -8
+ 130 00b7 89E5     		movl	%esp, %ebp
+ 131 006e 420D05   		.cfi_def_cfa_register 5
+ 132 00b9 83EC10   		subl	$16, %esp
+ 133 00bc E8FCFFFF 		call	__x86.get_pc_thunk.ax
+ 133      FF
+ 134 00c1 05010000 		addl	$_GLOBAL_OFFSET_TABLE_, %eax
+ 134      00
+  35:dijkstra.c    ****     int minDist = INF;
+ 135              		.loc 1 35 9
+ 136 00c6 C745FCFF 		movl	$2147483647, -4(%ebp)
+ 136      FFFF7F
+  36:dijkstra.c    ****     int minVertex = -1;
+ 137              		.loc 1 36 9
+ 138 00cd C745F8FF 		movl	$-1, -8(%ebp)
+ 138      FFFFFF
+ 139              	.LBB4:
+  37:dijkstra.c    ****     
+  38:dijkstra.c    ****     for (int v = 0; v < vertices; v++) {
+ 140              		.loc 1 38 14
+ 141 00d4 C745F400 		movl	$0, -12(%ebp)
+ 141      000000
+ 142              		.loc 1 38 5
+ 143 00db EB49     		jmp	.L10
+ 144              	.L12:
+  39:dijkstra.c    ****         if (!visited[v] && dist[v] < minDist) {
+ 145              		.loc 1 39 21
+ 146 00dd 8B45F4   		movl	-12(%ebp), %eax
+ 147 00e0 8D148500 		leal	0(,%eax,4), %edx
+ 147      000000
+ 148 00e7 8B450C   		movl	12(%ebp), %eax
+ 149 00ea 01D0     		addl	%edx, %eax
+ 150 00ec 8B00     		movl	(%eax), %eax
+ 151              		.loc 1 39 12
+ 152 00ee 85C0     		testl	%eax, %eax
+ 153 00f0 7530     		jne	.L11
+ 154              		.loc 1 39 32 discriminator 1
+ 155 00f2 8B45F4   		movl	-12(%ebp), %eax
+ 156 00f5 8D148500 		leal	0(,%eax,4), %edx
+ 156      000000
+ 157 00fc 8B4508   		movl	8(%ebp), %eax
+ 158 00ff 01D0     		addl	%edx, %eax
+ 159 0101 8B00     		movl	(%eax), %eax
+ 160              		.loc 1 39 25 discriminator 1
+ 161 0103 3945FC   		cmpl	%eax, -4(%ebp)
+ 162 0106 7E1A     		jle	.L11
+  40:dijkstra.c    ****             minDist = dist[v];
+ 163              		.loc 1 40 27
+ 164 0108 8B45F4   		movl	-12(%ebp), %eax
+ 165 010b 8D148500 		leal	0(,%eax,4), %edx
+ 165      000000
+ 166 0112 8B4508   		movl	8(%ebp), %eax
+ 167 0115 01D0     		addl	%edx, %eax
+ 168              		.loc 1 40 21
+ 169 0117 8B00     		movl	(%eax), %eax
+ 170 0119 8945FC   		movl	%eax, -4(%ebp)
+  41:dijkstra.c    ****             minVertex = v;
+ 171              		.loc 1 41 23
+ 172 011c 8B45F4   		movl	-12(%ebp), %eax
+ 173 011f 8945F8   		movl	%eax, -8(%ebp)
+ 174              	.L11:
+  38:dijkstra.c    ****         if (!visited[v] && dist[v] < minDist) {
+ 175              		.loc 1 38 36 discriminator 2
+ 176 0122 8345F401 		addl	$1, -12(%ebp)
+ 177              	.L10:
+  38:dijkstra.c    ****         if (!visited[v] && dist[v] < minDist) {
+ 178              		.loc 1 38 23 discriminator 1
+ 179 0126 8B45F4   		movl	-12(%ebp), %eax
+ 180 0129 3B4510   		cmpl	16(%ebp), %eax
+ 181 012c 7CAF     		jl	.L12
+ 182              	.LBE4:
+  42:dijkstra.c    ****         }
+  43:dijkstra.c    ****     }
+  44:dijkstra.c    ****     return minVertex;
+ 183              		.loc 1 44 12
+ 184 012e 8B45F8   		movl	-8(%ebp), %eax
+  45:dijkstra.c    **** }
+ 185              		.loc 1 45 1
+ 186 0131 C9       		leave
+ 187 0071 0279C5   		.cfi_restore 5
+ 188 0074 0C0404   		.cfi_def_cfa 4, 4
+ 189 0132 C3       		ret
+ 190 0077 00       		.cfi_endproc
+ 191              	.LFE8:
+ 193              		.section	.rodata
+ 194              		.align 4
+ 195              	.LC0:
+ 196 0000 44696A6B 		.string	"Dijkstra's Algorithm - Shortest Path from vertex %d:\n\n"
+ 196      73747261 
+ 196      27732041 
+ 196      6C676F72 
+ 196      6974686D 
+ 197              	.LC1:
+ 198 0037 56657274 		.string	"Vertex | Distance"
+ 198      6578207C 
+ 198      20446973 
+ 198      74616E63 
+ 198      6500
+ 199              	.LC2:
+ 200 0049 2D2D2D2D 		.string	"-------|----------"
+ 200      2D2D2D7C 
+ 200      2D2D2D2D 
+ 200      2D2D2D2D 
+ 200      2D2D00
+ 201              	.LC3:
+ 202 005c 20202025 		.string	"   %d   |    INF\n"
+ 202      64202020 
+ 202      7C202020 
+ 202      20494E46 
+ 202      0A00
+ 203              	.LC4:
+ 204 006e 20202025 		.string	"   %d   |    %d\n"
+ 204      64202020 
+ 204      7C202020 
+ 204      2025640A 
+ 204      00
+ 205              		.text
+ 206              		.globl	dijkstra
+ 208              	dijkstra:
+ 209              	.LFB9:
+  46:dijkstra.c    **** 
+  47:dijkstra.c    **** // Алгоритм Дейкстри
+  48:dijkstra.c    **** void dijkstra(Graph *g, int src) {
+ 210              		.loc 1 48 34
+ 211 0078 28000000 		.cfi_startproc
+ 211      7C000000 
+ 211      33010000 
+ 211      2D020000 
+ 211      00
+ 212 0133 55       		pushl	%ebp
+ 213 0089 410E08   		.cfi_def_cfa_offset 8
+ 214 008c 8502     		.cfi_offset 5, -8
+ 215 0134 89E5     		movl	%esp, %ebp
+ 216 008e 420D05   		.cfi_def_cfa_register 5
+ 217 0136 56       		pushl	%esi
+ 218 0137 53       		pushl	%ebx
+ 219 0138 81ECD004 		subl	$1232, %esp
+ 219      0000
+ 220 0091 488603   		.cfi_offset 6, -12
+ 221 0094 8304     		.cfi_offset 3, -16
+ 222 013e E8FCFFFF 		call	__x86.get_pc_thunk.bx
+ 222      FF
+ 223 0143 81C30200 		addl	$_GLOBAL_OFFSET_TABLE_, %ebx
+ 223      0000
+ 224              	.LBB5:
+  49:dijkstra.c    ****     int dist[MAX_VERTICES];
+  50:dijkstra.c    ****     int visited[MAX_VERTICES];
+  51:dijkstra.c    ****     int prev[MAX_VERTICES];
+  52:dijkstra.c    ****     
+  53:dijkstra.c    ****     // Ініціалізація
+  54:dijkstra.c    ****     for (int i = 0; i < g->vertices; i++) {
+ 225              		.loc 1 54 14
+ 226 0149 C745F400 		movl	$0, -12(%ebp)
+ 226      000000
+ 227              		.loc 1 54 5
+ 228 0150 EB2E     		jmp	.L15
+ 229              	.L16:
+  55:dijkstra.c    ****         dist[i] = INF;
+ 230              		.loc 1 55 17
+ 231 0152 8B45F4   		movl	-12(%ebp), %eax
+ 232 0155 C7848554 		movl	$2147483647, -428(%ebp,%eax,4)
+ 232      FEFFFFFF 
+ 232      FFFF7F
+  56:dijkstra.c    ****         visited[i] = 0;
+ 233              		.loc 1 56 20
+ 234 0160 8B45F4   		movl	-12(%ebp), %eax
+ 235 0163 C78485C4 		movl	$0, -828(%ebp,%eax,4)
+ 235      FCFFFF00 
+ 235      000000
+  57:dijkstra.c    ****         prev[i] = -1;
+ 236              		.loc 1 57 17
+ 237 016e 8B45F4   		movl	-12(%ebp), %eax
+ 238 0171 C7848534 		movl	$-1, -1228(%ebp,%eax,4)
+ 238      FBFFFFFF 
+ 238      FFFFFF
+  54:dijkstra.c    ****         dist[i] = INF;
+ 239              		.loc 1 54 39 discriminator 3
+ 240 017c 8345F401 		addl	$1, -12(%ebp)
+ 241              	.L15:
+  54:dijkstra.c    ****         dist[i] = INF;
+ 242              		.loc 1 54 26 discriminator 1
+ 243 0180 8B4508   		movl	8(%ebp), %eax
+ 244 0183 8B80409C 		movl	40000(%eax), %eax
+ 244      0000
+  54:dijkstra.c    ****         dist[i] = INF;
+ 245              		.loc 1 54 23 discriminator 1
+ 246 0189 3945F4   		cmpl	%eax, -12(%ebp)
+ 247 018c 7CC4     		jl	.L16
+ 248              	.LBE5:
+  58:dijkstra.c    ****     }
+  59:dijkstra.c    ****     dist[src] = 0;
+ 249              		.loc 1 59 15
+ 250 018e 8B450C   		movl	12(%ebp), %eax
+ 251 0191 C7848554 		movl	$0, -428(%ebp,%eax,4)
+ 251      FEFFFF00 
+ 251      000000
+ 252              	.LBB6:
+  60:dijkstra.c    ****     
+  61:dijkstra.c    ****     // Основний цикл
+  62:dijkstra.c    ****     for (int count = 0; count < g->vertices - 1; count++) {
+ 253              		.loc 1 62 14
+ 254 019c C745F000 		movl	$0, -16(%ebp)
+ 254      000000
+ 255              		.loc 1 62 5
+ 256 01a3 E9FB0000 		jmp	.L17
+ 256      00
+ 257              	.L23:
+ 258              	.LBB7:
+  63:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+  64:dijkstra.c    ****         int u = minDistance(dist, visited, g->vertices);
+ 259              		.loc 1 64 17
+ 260 01a8 8B4508   		movl	8(%ebp), %eax
+ 261 01ab 8B80409C 		movl	40000(%eax), %eax
+ 261      0000
+ 262 01b1 50       		pushl	%eax
+ 263 01b2 8D85C4FC 		leal	-828(%ebp), %eax
+ 263      FFFF
+ 264 01b8 50       		pushl	%eax
+ 265 01b9 8D8554FE 		leal	-428(%ebp), %eax
+ 265      FFFF
+ 266 01bf 50       		pushl	%eax
+ 267 01c0 E8FCFFFF 		call	minDistance
+ 267      FF
+ 268 01c5 83C40C   		addl	$12, %esp
+ 269 01c8 8945E4   		movl	%eax, -28(%ebp)
+  65:dijkstra.c    ****         
+  66:dijkstra.c    ****         if (u == -1) break;
+ 270              		.loc 1 66 12
+ 271 01cb 837DE4FF 		cmpl	$-1, -28(%ebp)
+ 272 01cf 0F84E500 		je	.L28
+ 272      0000
+  67:dijkstra.c    ****         
+  68:dijkstra.c    ****         visited[u] = 1;
+ 273              		.loc 1 68 20
+ 274 01d5 8B45E4   		movl	-28(%ebp), %eax
+ 275 01d8 C78485C4 		movl	$1, -828(%ebp,%eax,4)
+ 275      FCFFFF01 
+ 275      000000
+ 276              	.LBB8:
+  69:dijkstra.c    ****         
+  70:dijkstra.c    ****         // Релаксація ребер
+  71:dijkstra.c    ****         for (int v = 0; v < g->vertices; v++) {
+ 277              		.loc 1 71 18
+ 278 01e3 C745EC00 		movl	$0, -20(%ebp)
+ 278      000000
+ 279              		.loc 1 71 9
+ 280 01ea E99E0000 		jmp	.L20
+ 280      00
+ 281              	.L22:
+  72:dijkstra.c    ****             if (!visited[v] && 
+ 282              		.loc 1 72 25
+ 283 01ef 8B45EC   		movl	-20(%ebp), %eax
+ 284 01f2 8B8485C4 		movl	-828(%ebp,%eax,4), %eax
+ 284      FCFFFF
+ 285              		.loc 1 72 16
+ 286 01f9 85C0     		testl	%eax, %eax
+ 287 01fb 0F858800 		jne	.L21
+ 287      0000
+  73:dijkstra.c    ****                 g->weight[u][v] != INF && 
+ 288              		.loc 1 73 29
+ 289 0201 8B4508   		movl	8(%ebp), %eax
+ 290 0204 8B55E4   		movl	-28(%ebp), %edx
+ 291 0207 6BCA64   		imull	$100, %edx, %ecx
+ 292 020a 8B55EC   		movl	-20(%ebp), %edx
+ 293 020d 01CA     		addl	%ecx, %edx
+ 294 020f 8B0490   		movl	(%eax,%edx,4), %eax
+  72:dijkstra.c    ****             if (!visited[v] && 
+ 295              		.loc 1 72 29 discriminator 1
+ 296 0212 3DFFFFFF 		cmpl	$2147483647, %eax
+ 296      7F
+ 297 0217 7470     		je	.L21
+  74:dijkstra.c    ****                 dist[u] != INF && 
+ 298              		.loc 1 74 21
+ 299 0219 8B45E4   		movl	-28(%ebp), %eax
+ 300 021c 8B848554 		movl	-428(%ebp,%eax,4), %eax
+ 300      FEFFFF
+  73:dijkstra.c    ****                 g->weight[u][v] != INF && 
+ 301              		.loc 1 73 40
+ 302 0223 3DFFFFFF 		cmpl	$2147483647, %eax
+ 302      7F
+ 303 0228 745F     		je	.L21
+  75:dijkstra.c    ****                 dist[u] + g->weight[u][v] < dist[v]) {
+ 304              		.loc 1 75 21
+ 305 022a 8B45E4   		movl	-28(%ebp), %eax
+ 306 022d 8B948554 		movl	-428(%ebp,%eax,4), %edx
+ 306      FEFFFF
+ 307              		.loc 1 75 39
+ 308 0234 8B4508   		movl	8(%ebp), %eax
+ 309 0237 8B4DE4   		movl	-28(%ebp), %ecx
+ 310 023a 6BF164   		imull	$100, %ecx, %esi
+ 311 023d 8B4DEC   		movl	-20(%ebp), %ecx
+ 312 0240 01F1     		addl	%esi, %ecx
+ 313 0242 8B0488   		movl	(%eax,%ecx,4), %eax
+ 314              		.loc 1 75 25
+ 315 0245 01C2     		addl	%eax, %edx
+ 316              		.loc 1 75 49
+ 317 0247 8B45EC   		movl	-20(%ebp), %eax
+ 318 024a 8B848554 		movl	-428(%ebp,%eax,4), %eax
+ 318      FEFFFF
+  74:dijkstra.c    ****                 dist[u] != INF && 
+ 319              		.loc 1 74 32
+ 320 0251 39C2     		cmpl	%eax, %edx
+ 321 0253 7D34     		jge	.L21
+  76:dijkstra.c    ****                 
+  77:dijkstra.c    ****                 dist[v] = dist[u] + g->weight[u][v];
+ 322              		.loc 1 77 31
+ 323 0255 8B45E4   		movl	-28(%ebp), %eax
+ 324 0258 8B948554 		movl	-428(%ebp,%eax,4), %edx
+ 324      FEFFFF
+ 325              		.loc 1 77 49
+ 326 025f 8B4508   		movl	8(%ebp), %eax
+ 327 0262 8B4DE4   		movl	-28(%ebp), %ecx
+ 328 0265 6BF164   		imull	$100, %ecx, %esi
+ 329 0268 8B4DEC   		movl	-20(%ebp), %ecx
+ 330 026b 01F1     		addl	%esi, %ecx
+ 331 026d 8B0488   		movl	(%eax,%ecx,4), %eax
+ 332              		.loc 1 77 35
+ 333 0270 01C2     		addl	%eax, %edx
+ 334              		.loc 1 77 25
+ 335 0272 8B45EC   		movl	-20(%ebp), %eax
+ 336 0275 89948554 		movl	%edx, -428(%ebp,%eax,4)
+ 336      FEFFFF
+  78:dijkstra.c    ****                 prev[v] = u;
+ 337              		.loc 1 78 25
+ 338 027c 8B45EC   		movl	-20(%ebp), %eax
+ 339 027f 8B55E4   		movl	-28(%ebp), %edx
+ 340 0282 89948534 		movl	%edx, -1228(%ebp,%eax,4)
+ 340      FBFFFF
+ 341              	.L21:
+  71:dijkstra.c    ****             if (!visited[v] && 
+ 342              		.loc 1 71 43 discriminator 2
+ 343 0289 8345EC01 		addl	$1, -20(%ebp)
+ 344              	.L20:
+  71:dijkstra.c    ****             if (!visited[v] && 
+ 345              		.loc 1 71 30 discriminator 1
+ 346 028d 8B4508   		movl	8(%ebp), %eax
+ 347 0290 8B80409C 		movl	40000(%eax), %eax
+ 347      0000
+  71:dijkstra.c    ****             if (!visited[v] && 
+ 348              		.loc 1 71 27 discriminator 1
+ 349 0296 3945EC   		cmpl	%eax, -20(%ebp)
+ 350 0299 0F8C50FF 		jl	.L22
+ 350      FFFF
+ 351              	.LBE8:
+ 352              	.LBE7:
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 353              		.loc 1 62 55 discriminator 2
+ 354 029f 8345F001 		addl	$1, -16(%ebp)
+ 355              	.L17:
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 356              		.loc 1 62 34 discriminator 1
+ 357 02a3 8B4508   		movl	8(%ebp), %eax
+ 358 02a6 8B80409C 		movl	40000(%eax), %eax
+ 358      0000
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 359              		.loc 1 62 45 discriminator 1
+ 360 02ac 83E801   		subl	$1, %eax
+  62:dijkstra.c    ****         // Знаходимо вершину з мінімальною відстанню
+ 361              		.loc 1 62 31 discriminator 1
+ 362 02af 3945F0   		cmpl	%eax, -16(%ebp)
+ 363 02b2 0F8CF0FE 		jl	.L23
+ 363      FFFF
+ 364 02b8 EB01     		jmp	.L19
+ 365              	.L28:
+ 366              	.LBB9:
+  66:dijkstra.c    ****         
+ 367              		.loc 1 66 22
+ 368 02ba 90       		nop
+ 369              	.L19:
+ 370              	.LBE9:
+ 371              	.LBE6:
+  79:dijkstra.c    ****             }
+  80:dijkstra.c    ****         }
+  81:dijkstra.c    ****     }
+  82:dijkstra.c    ****     
+  83:dijkstra.c    ****     // Виведення результатів
+  84:dijkstra.c    ****     printf("Dijkstra's Algorithm - Shortest Path from vertex %d:\n\n", src);
+ 372              		.loc 1 84 5
+ 373 02bb 83EC08   		subl	$8, %esp
+ 374 02be FF750C   		pushl	12(%ebp)
+ 375 02c1 8D830000 		leal	.LC0@GOTOFF(%ebx), %eax
+ 375      0000
+ 376 02c7 50       		pushl	%eax
+ 377 02c8 E8FCFFFF 		call	printf@PLT
+ 377      FF
+ 378 02cd 83C410   		addl	$16, %esp
+  85:dijkstra.c    ****     printf("Vertex | Distance\n");
+ 379              		.loc 1 85 5
+ 380 02d0 83EC0C   		subl	$12, %esp
+ 381 02d3 8D833700 		leal	.LC1@GOTOFF(%ebx), %eax
+ 381      0000
+ 382 02d9 50       		pushl	%eax
+ 383 02da E8FCFFFF 		call	puts@PLT
+ 383      FF
+ 384 02df 83C410   		addl	$16, %esp
+  86:dijkstra.c    ****     printf("-------|----------\n");
+ 385              		.loc 1 86 5
+ 386 02e2 83EC0C   		subl	$12, %esp
+ 387 02e5 8D834900 		leal	.LC2@GOTOFF(%ebx), %eax
+ 387      0000
+ 388 02eb 50       		pushl	%eax
+ 389 02ec E8FCFFFF 		call	puts@PLT
+ 389      FF
+ 390 02f1 83C410   		addl	$16, %esp
+ 391              	.LBB10:
+  87:dijkstra.c    ****     for (int i = 0; i < g->vertices; i++) {
+ 392              		.loc 1 87 14
+ 393 02f4 C745E800 		movl	$0, -24(%ebp)
+ 393      000000
+ 394              		.loc 1 87 5
+ 395 02fb EB4C     		jmp	.L24
+ 396              	.L27:
+  88:dijkstra.c    ****         if (dist[i] == INF)
+ 397              		.loc 1 88 17
+ 398 02fd 8B45E8   		movl	-24(%ebp), %eax
+ 399 0300 8B848554 		movl	-428(%ebp,%eax,4), %eax
+ 399      FEFFFF
+ 400              		.loc 1 88 12
+ 401 0307 3DFFFFFF 		cmpl	$2147483647, %eax
+ 401      7F
+ 402 030c 7517     		jne	.L25
+  89:dijkstra.c    ****             printf("   %d   |    INF\n", i);
+ 403              		.loc 1 89 13
+ 404 030e 83EC08   		subl	$8, %esp
+ 405 0311 FF75E8   		pushl	-24(%ebp)
+ 406 0314 8D835C00 		leal	.LC3@GOTOFF(%ebx), %eax
+ 406      0000
+ 407 031a 50       		pushl	%eax
+ 408 031b E8FCFFFF 		call	printf@PLT
+ 408      FF
+ 409 0320 83C410   		addl	$16, %esp
+ 410 0323 EB20     		jmp	.L26
+ 411              	.L25:
+  90:dijkstra.c    ****         else
+  91:dijkstra.c    ****             printf("   %d   |    %d\n", i, dist[i]);
+ 412              		.loc 1 91 13
+ 413 0325 8B45E8   		movl	-24(%ebp), %eax
+ 414 0328 8B848554 		movl	-428(%ebp,%eax,4), %eax
+ 414      FEFFFF
+ 415 032f 83EC04   		subl	$4, %esp
+ 416 0332 50       		pushl	%eax
+ 417 0333 FF75E8   		pushl	-24(%ebp)
+ 418 0336 8D836E00 		leal	.LC4@GOTOFF(%ebx), %eax
+ 418      0000
+ 419 033c 50       		pushl	%eax
+ 420 033d E8FCFFFF 		call	printf@PLT
+ 420      FF
+ 421 0342 83C410   		addl	$16, %esp
+ 422              	.L26:
+  87:dijkstra.c    ****         if (dist[i] == INF)
+ 423              		.loc 1 87 39 discriminator 2
+ 424 0345 8345E801 		addl	$1, -24(%ebp)
+ 425              	.L24:
+  87:dijkstra.c    ****         if (dist[i] == INF)
+ 426              		.loc 1 87 26 discriminator 1
+ 427 0349 8B4508   		movl	8(%ebp), %eax
+ 428 034c 8B80409C 		movl	40000(%eax), %eax
+ 428      0000
+  87:dijkstra.c    ****         if (dist[i] == INF)
+ 429              		.loc 1 87 23 discriminator 1
+ 430 0352 3945E8   		cmpl	%eax, -24(%ebp)
+ 431 0355 7CA6     		jl	.L27
+ 432              	.LBE10:
+  92:dijkstra.c    ****     }
+  93:dijkstra.c    **** }
+ 433              		.loc 1 93 1
+ 434 0357 90       		nop
+ 435 0358 90       		nop
+ 436 0359 8D65F8   		leal	-8(%ebp), %esp
+ 437 035c 5B       		popl	%ebx
+ 438 0096 031F02C3 		.cfi_restore 3
+ 439 035d 5E       		popl	%esi
+ 440 009a 41C6     		.cfi_restore 6
+ 441 035e 5D       		popl	%ebp
+ 442 009c 41C5     		.cfi_restore 5
+ 443 009e 0C0404   		.cfi_def_cfa 4, 4
+ 444 035f C3       		ret
+ 445 00a1 000000   		.cfi_endproc
+ 446              	.LFE9:
+ 448              		.globl	main
+ 450              	main:
+ 451              	.LFB10:
+  94:dijkstra.c    **** 
+  95:dijkstra.c    **** int main() {
+ 452              		.loc 1 95 12
+ 453 00a4 28000000 		.cfi_startproc
+ 453      A8000000 
+ 453      60030000 
+ 453      0D010000 
+ 453      00
+ 454 0360 8D4C2404 		leal	4(%esp), %ecx
+ 455 00b5 440C0100 		.cfi_def_cfa 1, 0
+ 456 0364 83E4F0   		andl	$-16, %esp
+ 457 0367 FF71FC   		pushl	-4(%ecx)
+ 458 036a 55       		pushl	%ebp
+ 459 036b 89E5     		movl	%esp, %ebp
+ 460 00b9 49100502 		.cfi_escape 0x10,0x5,0x2,0x75,0
+ 460      7500
+ 461 036d 51       		pushl	%ecx
+ 462 00bf 410F0375 		.cfi_escape 0xf,0x3,0x75,0x7c,0x6
+ 462      7C06
+ 463 036e 81EC549C 		subl	$40020, %esp
+ 463      0000
+ 464 0374 E8FCFFFF 		call	__x86.get_pc_thunk.ax
+ 464      FF
+ 465 0379 05010000 		addl	$_GLOBAL_OFFSET_TABLE_, %eax
+ 465      00
+  96:dijkstra.c    ****     Graph g;
+  97:dijkstra.c    ****     initGraph(&g, 6);
+ 466              		.loc 1 97 5
+ 467 037e 6A06     		pushl	$6
+ 468 0380 8D85B463 		leal	-40012(%ebp), %eax
+ 468      FFFF
+ 469 0386 50       		pushl	%eax
+ 470 0387 E8FCFFFF 		call	initGraph
+ 470      FF
+ 471 038c 83C408   		addl	$8, %esp
+  98:dijkstra.c    ****     
+  99:dijkstra.c    ****     // Додавання ребер (u, v, вага)
+ 100:dijkstra.c    ****     addEdge(&g, 0, 1, 4);
+ 472              		.loc 1 100 5
+ 473 038f 6A04     		pushl	$4
+ 474 0391 6A01     		pushl	$1
+ 475 0393 6A00     		pushl	$0
+ 476 0395 8D85B463 		leal	-40012(%ebp), %eax
+ 476      FFFF
+ 477 039b 50       		pushl	%eax
+ 478 039c E8FCFFFF 		call	addEdge
+ 478      FF
+ 479 03a1 83C410   		addl	$16, %esp
+ 101:dijkstra.c    ****     addEdge(&g, 0, 2, 2);
+ 480              		.loc 1 101 5
+ 481 03a4 6A02     		pushl	$2
+ 482 03a6 6A02     		pushl	$2
+ 483 03a8 6A00     		pushl	$0
+ 484 03aa 8D85B463 		leal	-40012(%ebp), %eax
+ 484      FFFF
+ 485 03b0 50       		pushl	%eax
+ 486 03b1 E8FCFFFF 		call	addEdge
+ 486      FF
+ 487 03b6 83C410   		addl	$16, %esp
+ 102:dijkstra.c    ****     addEdge(&g, 1, 2, 1);
+ 488              		.loc 1 102 5
+ 489 03b9 6A01     		pushl	$1
+ 490 03bb 6A02     		pushl	$2
+ 491 03bd 6A01     		pushl	$1
+ 492 03bf 8D85B463 		leal	-40012(%ebp), %eax
+ 492      FFFF
+ 493 03c5 50       		pushl	%eax
+ 494 03c6 E8FCFFFF 		call	addEdge
+ 494      FF
+ 495 03cb 83C410   		addl	$16, %esp
+ 103:dijkstra.c    ****     addEdge(&g, 1, 3, 5);
+ 496              		.loc 1 103 5
+ 497 03ce 6A05     		pushl	$5
+ 498 03d0 6A03     		pushl	$3
+ 499 03d2 6A01     		pushl	$1
+ 500 03d4 8D85B463 		leal	-40012(%ebp), %eax
+ 500      FFFF
+ 501 03da 50       		pushl	%eax
+ 502 03db E8FCFFFF 		call	addEdge
+ 502      FF
+ 503 03e0 83C410   		addl	$16, %esp
+ 104:dijkstra.c    ****     addEdge(&g, 2, 3, 8);
+ 504              		.loc 1 104 5
+ 505 03e3 6A08     		pushl	$8
+ 506 03e5 6A03     		pushl	$3
+ 507 03e7 6A02     		pushl	$2
+ 508 03e9 8D85B463 		leal	-40012(%ebp), %eax
+ 508      FFFF
+ 509 03ef 50       		pushl	%eax
+ 510 03f0 E8FCFFFF 		call	addEdge
+ 510      FF
+ 511 03f5 83C410   		addl	$16, %esp
+ 105:dijkstra.c    ****     addEdge(&g, 2, 4, 10);
+ 512              		.loc 1 105 5
+ 513 03f8 6A0A     		pushl	$10
+ 514 03fa 6A04     		pushl	$4
+ 515 03fc 6A02     		pushl	$2
+ 516 03fe 8D85B463 		leal	-40012(%ebp), %eax
+ 516      FFFF
+ 517 0404 50       		pushl	%eax
+ 518 0405 E8FCFFFF 		call	addEdge
+ 518      FF
+ 519 040a 83C410   		addl	$16, %esp
+ 106:dijkstra.c    ****     addEdge(&g, 3, 4, 2);
+ 520              		.loc 1 106 5
+ 521 040d 6A02     		pushl	$2
+ 522 040f 6A04     		pushl	$4
+ 523 0411 6A03     		pushl	$3
+ 524 0413 8D85B463 		leal	-40012(%ebp), %eax
+ 524      FFFF
+ 525 0419 50       		pushl	%eax
+ 526 041a E8FCFFFF 		call	addEdge
+ 526      FF
+ 527 041f 83C410   		addl	$16, %esp
+ 107:dijkstra.c    ****     addEdge(&g, 3, 5, 6);
+ 528              		.loc 1 107 5
+ 529 0422 6A06     		pushl	$6
+ 530 0424 6A05     		pushl	$5
+ 531 0426 6A03     		pushl	$3
+ 532 0428 8D85B463 		leal	-40012(%ebp), %eax
+ 532      FFFF
+ 533 042e 50       		pushl	%eax
+ 534 042f E8FCFFFF 		call	addEdge
+ 534      FF
+ 535 0434 83C410   		addl	$16, %esp
+ 108:dijkstra.c    ****     addEdge(&g, 4, 5, 3);
+ 536              		.loc 1 108 5
+ 537 0437 6A03     		pushl	$3
+ 538 0439 6A05     		pushl	$5
+ 539 043b 6A04     		pushl	$4
+ 540 043d 8D85B463 		leal	-40012(%ebp), %eax
+ 540      FFFF
+ 541 0443 50       		pushl	%eax
+ 542 0444 E8FCFFFF 		call	addEdge
+ 542      FF
+ 543 0449 83C410   		addl	$16, %esp
+ 109:dijkstra.c    ****     
+ 110:dijkstra.c    ****     dijkstra(&g, 0);
+ 544              		.loc 1 110 5
+ 545 044c 83EC08   		subl	$8, %esp
+ 546 044f 6A00     		pushl	$0
+ 547 0451 8D85B463 		leal	-40012(%ebp), %eax
+ 547      FFFF
+ 548 0457 50       		pushl	%eax
+ 549 0458 E8FCFFFF 		call	dijkstra
+ 549      FF
+ 550 045d 83C410   		addl	$16, %esp
+ 111:dijkstra.c    ****     
+ 112:dijkstra.c    ****     return 0;
+ 551              		.loc 1 112 12
+ 552 0460 B8000000 		movl	$0, %eax
+ 552      00
+ 113:dijkstra.c    **** }
+ 553              		.loc 1 113 1
+ 554 0465 8B4DFC   		movl	-4(%ebp), %ecx
+ 555 00c5 02FA0C01 		.cfi_def_cfa 1, 0
+ 555      00
+ 556 0468 C9       		leave
+ 557 00ca 41C5     		.cfi_restore 5
+ 558 0469 8D61FC   		leal	-4(%ecx), %esp
+ 559 00cc 430C0404 		.cfi_def_cfa 4, 4
+ 560 046c C3       		ret
+ 561              		.cfi_endproc
+ 562              	.LFE10:
+ 564              		.section	.text.__x86.get_pc_thunk.ax,"axG",@progbits,__x86.get_pc_thunk.ax,comdat
+ 565              		.globl	__x86.get_pc_thunk.ax
+ 566              		.hidden	__x86.get_pc_thunk.ax
+ 568              	__x86.get_pc_thunk.ax:
+ 569              	.LFB11:
+ 570 00d0 10000000 		.cfi_startproc
+ 570      D4000000 
+ 570      00000000 
+ 570      04000000 
+ 570      00
+ 571 0000 8B0424   		movl	(%esp), %eax
+ 572 0003 C3       		ret
+ 573 00e1 000000   		.cfi_endproc
+ 574              	.LFE11:
+ 575              		.section	.text.__x86.get_pc_thunk.bx,"axG",@progbits,__x86.get_pc_thunk.bx,comdat
+ 576              		.globl	__x86.get_pc_thunk.bx
+ 577              		.hidden	__x86.get_pc_thunk.bx
+ 579              	__x86.get_pc_thunk.bx:
+ 580              	.LFB12:
+ 581 00e4 10000000 		.cfi_startproc
+ 581      E8000000 
+ 581      00000000 
+ 581      04000000 
+ 581      00
+ 582 0000 8B1C24   		movl	(%esp), %ebx
+ 583 0003 C3       		ret
+ 584 00f5 000000   		.cfi_endproc
+ 585              	.LFE12:
+ 586              		.text
+ 587              	.Letext0:
+ 588              		.file 2 "/usr/i686-linux-gnu/include/stdio.h"

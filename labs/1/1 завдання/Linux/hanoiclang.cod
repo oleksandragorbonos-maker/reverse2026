@@ -1,0 +1,171 @@
+
+hanoiclang:	file format elf64-x86-64
+
+Disassembly of section .init:
+
+0000000000001000 <_init>:
+    1000: 48 83 ec 08                  	subq	$0x8, %rsp
+    1004: 48 8b 05 c5 2f 00 00         	movq	0x2fc5(%rip), %rax      # 0x3fd0 <printf@GLIBC_2.2.5+0x3fd0>
+    100b: 48 85 c0                     	testq	%rax, %rax
+    100e: 74 02                        	je	0x1012 <_init+0x12>
+    1010: ff d0                        	callq	*%rax
+    1012: 48 83 c4 08                  	addq	$0x8, %rsp
+    1016: c3                           	retq
+
+Disassembly of section .plt:
+
+0000000000001020 <.plt>:
+    1020: ff 35 ca 2f 00 00            	pushq	0x2fca(%rip)            # 0x3ff0 <_GLOBAL_OFFSET_TABLE_+0x8>
+    1026: ff 25 cc 2f 00 00            	jmpq	*0x2fcc(%rip)           # 0x3ff8 <_GLOBAL_OFFSET_TABLE_+0x10>
+    102c: 0f 1f 40 00                  	nopl	(%rax)
+
+0000000000001030 <printf@plt>:
+    1030: ff 25 ca 2f 00 00            	jmpq	*0x2fca(%rip)           # 0x4000 <_GLOBAL_OFFSET_TABLE_+0x18>
+    1036: 68 00 00 00 00               	pushq	$0x0
+    103b: e9 e0 ff ff ff               	jmp	0x1020 <.plt>
+
+Disassembly of section .plt.got:
+
+0000000000001040 <__cxa_finalize@plt>:
+    1040: ff 25 9a 2f 00 00            	jmpq	*0x2f9a(%rip)           # 0x3fe0 <printf@GLIBC_2.2.5+0x3fe0>
+    1046: 66 90                        	nop
+
+Disassembly of section .text:
+
+0000000000001050 <_start>:
+    1050: 31 ed                        	xorl	%ebp, %ebp
+    1052: 49 89 d1                     	movq	%rdx, %r9
+    1055: 5e                           	popq	%rsi
+    1056: 48 89 e2                     	movq	%rsp, %rdx
+    1059: 48 83 e4 f0                  	andq	$-0x10, %rsp
+    105d: 50                           	pushq	%rax
+    105e: 54                           	pushq	%rsp
+    105f: 45 31 c0                     	xorl	%r8d, %r8d
+    1062: 31 c9                        	xorl	%ecx, %ecx
+    1064: 48 8d 3d 65 01 00 00         	leaq	0x165(%rip), %rdi       # 0x11d0 <main>
+    106b: ff 15 4f 2f 00 00            	callq	*0x2f4f(%rip)           # 0x3fc0 <printf@GLIBC_2.2.5+0x3fc0>
+    1071: f4                           	hlt
+    1072: 66 2e 0f 1f 84 00 00 00 00 00	nopw	%cs:(%rax,%rax)
+    107c: 0f 1f 40 00                  	nopl	(%rax)
+
+0000000000001080 <deregister_tm_clones>:
+    1080: 48 8d 3d 91 2f 00 00         	leaq	0x2f91(%rip), %rdi      # 0x4018 <completed.0>
+    1087: 48 8d 05 8a 2f 00 00         	leaq	0x2f8a(%rip), %rax      # 0x4018 <completed.0>
+    108e: 48 39 f8                     	cmpq	%rdi, %rax
+    1091: 74 15                        	je	0x10a8 <deregister_tm_clones+0x28>
+    1093: 48 8b 05 2e 2f 00 00         	movq	0x2f2e(%rip), %rax      # 0x3fc8 <printf@GLIBC_2.2.5+0x3fc8>
+    109a: 48 85 c0                     	testq	%rax, %rax
+    109d: 74 09                        	je	0x10a8 <deregister_tm_clones+0x28>
+    109f: ff e0                        	jmpq	*%rax
+    10a1: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+    10a8: c3                           	retq
+    10a9: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+00000000000010b0 <register_tm_clones>:
+    10b0: 48 8d 3d 61 2f 00 00         	leaq	0x2f61(%rip), %rdi      # 0x4018 <completed.0>
+    10b7: 48 8d 35 5a 2f 00 00         	leaq	0x2f5a(%rip), %rsi      # 0x4018 <completed.0>
+    10be: 48 29 fe                     	subq	%rdi, %rsi
+    10c1: 48 89 f0                     	movq	%rsi, %rax
+    10c4: 48 c1 ee 3f                  	shrq	$0x3f, %rsi
+    10c8: 48 c1 f8 03                  	sarq	$0x3, %rax
+    10cc: 48 01 c6                     	addq	%rax, %rsi
+    10cf: 48 d1 fe                     	sarq	%rsi
+    10d2: 74 14                        	je	0x10e8 <register_tm_clones+0x38>
+    10d4: 48 8b 05 fd 2e 00 00         	movq	0x2efd(%rip), %rax      # 0x3fd8 <printf@GLIBC_2.2.5+0x3fd8>
+    10db: 48 85 c0                     	testq	%rax, %rax
+    10de: 74 08                        	je	0x10e8 <register_tm_clones+0x38>
+    10e0: ff e0                        	jmpq	*%rax
+    10e2: 66 0f 1f 44 00 00            	nopw	(%rax,%rax)
+    10e8: c3                           	retq
+    10e9: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+00000000000010f0 <__do_global_dtors_aux>:
+    10f0: f3 0f 1e fa                  	endbr64
+    10f4: 80 3d 1d 2f 00 00 00         	cmpb	$0x0, 0x2f1d(%rip)      # 0x4018 <completed.0>
+    10fb: 75 2b                        	jne	0x1128 <__do_global_dtors_aux+0x38>
+    10fd: 55                           	pushq	%rbp
+    10fe: 48 83 3d da 2e 00 00 00      	cmpq	$0x0, 0x2eda(%rip)      # 0x3fe0 <printf@GLIBC_2.2.5+0x3fe0>
+    1106: 48 89 e5                     	movq	%rsp, %rbp
+    1109: 74 0c                        	je	0x1117 <__do_global_dtors_aux+0x27>
+    110b: 48 8b 3d fe 2e 00 00         	movq	0x2efe(%rip), %rdi      # 0x4010 <__dso_handle>
+    1112: e8 29 ff ff ff               	callq	0x1040 <__cxa_finalize@plt>
+    1117: e8 64 ff ff ff               	callq	0x1080 <deregister_tm_clones>
+    111c: c6 05 f5 2e 00 00 01         	movb	$0x1, 0x2ef5(%rip)      # 0x4018 <completed.0>
+    1123: 5d                           	popq	%rbp
+    1124: c3                           	retq
+    1125: 0f 1f 00                     	nopl	(%rax)
+    1128: c3                           	retq
+    1129: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000001130 <frame_dummy>:
+    1130: f3 0f 1e fa                  	endbr64
+    1134: e9 77 ff ff ff               	jmp	0x10b0 <register_tm_clones>
+    1139: 0f 1f 80 00 00 00 00         	nopl	(%rax)
+
+0000000000001140 <hanoi>:
+    1140: 55                           	pushq	%rbp
+    1141: 48 89 e5                     	movq	%rsp, %rbp
+    1144: 48 83 ec 10                  	subq	$0x10, %rsp
+    1148: 88 c8                        	movb	%cl, %al
+    114a: 88 d1                        	movb	%dl, %cl
+    114c: 40 88 f2                     	movb	%sil, %dl
+    114f: 89 7d fc                     	movl	%edi, -0x4(%rbp)
+    1152: 88 55 fb                     	movb	%dl, -0x5(%rbp)
+    1155: 88 4d fa                     	movb	%cl, -0x6(%rbp)
+    1158: 88 45 f9                     	movb	%al, -0x7(%rbp)
+    115b: 83 7d fc 01                  	cmpl	$0x1, -0x4(%rbp)
+    115f: 75 18                        	jne	0x1179 <hanoi+0x39>
+    1161: 0f be 75 fb                  	movsbl	-0x5(%rbp), %esi
+    1165: 0f be 55 fa                  	movsbl	-0x6(%rbp), %edx
+    1169: 48 8d 3d 94 0e 00 00         	leaq	0xe94(%rip), %rdi       # 0x2004 <_IO_stdin_used+0x4>
+    1170: b0 00                        	movb	$0x0, %al
+    1172: e8 b9 fe ff ff               	callq	0x1030 <printf@plt>
+    1177: eb 4f                        	jmp	0x11c8 <hanoi+0x88>
+    1179: 8b 7d fc                     	movl	-0x4(%rbp), %edi
+    117c: 83 ef 01                     	subl	$0x1, %edi
+    117f: 8a 4d fb                     	movb	-0x5(%rbp), %cl
+    1182: 8a 45 f9                     	movb	-0x7(%rbp), %al
+    1185: 0f be f1                     	movsbl	%cl, %esi
+    1188: 0f be d0                     	movsbl	%al, %edx
+    118b: 0f be 4d fa                  	movsbl	-0x6(%rbp), %ecx
+    118f: e8 ac ff ff ff               	callq	0x1140 <hanoi>
+    1194: 8b 75 fc                     	movl	-0x4(%rbp), %esi
+    1197: 0f be 55 fb                  	movsbl	-0x5(%rbp), %edx
+    119b: 0f be 4d fa                  	movsbl	-0x6(%rbp), %ecx
+    119f: 48 8d 3d 79 0e 00 00         	leaq	0xe79(%rip), %rdi       # 0x201f <_IO_stdin_used+0x1f>
+    11a6: b0 00                        	movb	$0x0, %al
+    11a8: e8 83 fe ff ff               	callq	0x1030 <printf@plt>
+    11ad: 8b 7d fc                     	movl	-0x4(%rbp), %edi
+    11b0: 83 ef 01                     	subl	$0x1, %edi
+    11b3: 8a 4d f9                     	movb	-0x7(%rbp), %cl
+    11b6: 8a 45 fa                     	movb	-0x6(%rbp), %al
+    11b9: 0f be f1                     	movsbl	%cl, %esi
+    11bc: 0f be d0                     	movsbl	%al, %edx
+    11bf: 0f be 4d fb                  	movsbl	-0x5(%rbp), %ecx
+    11c3: e8 78 ff ff ff               	callq	0x1140 <hanoi>
+    11c8: 48 83 c4 10                  	addq	$0x10, %rsp
+    11cc: 5d                           	popq	%rbp
+    11cd: c3                           	retq
+    11ce: 66 90                        	nop
+
+00000000000011d0 <main>:
+    11d0: 55                           	pushq	%rbp
+    11d1: 48 89 e5                     	movq	%rsp, %rbp
+    11d4: 48 83 ec 10                  	subq	$0x10, %rsp
+    11d8: c7 45 fc 00 00 00 00         	movl	$0x0, -0x4(%rbp)
+    11df: bf 03 00 00 00               	movl	$0x3, %edi
+    11e4: be 41 00 00 00               	movl	$0x41, %esi
+    11e9: ba 43 00 00 00               	movl	$0x43, %edx
+    11ee: b9 42 00 00 00               	movl	$0x42, %ecx
+    11f3: e8 48 ff ff ff               	callq	0x1140 <hanoi>
+    11f8: 31 c0                        	xorl	%eax, %eax
+    11fa: 48 83 c4 10                  	addq	$0x10, %rsp
+    11fe: 5d                           	popq	%rbp
+    11ff: c3                           	retq
+
+Disassembly of section .fini:
+
+0000000000001200 <_fini>:
+    1200: 48 83 ec 08                  	subq	$0x8, %rsp
+    1204: 48 83 c4 08                  	addq	$0x8, %rsp
+    1208: c3                           	retq
